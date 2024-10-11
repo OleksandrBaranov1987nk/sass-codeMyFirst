@@ -1,3 +1,40 @@
+/*імпортуємо модуль map для роботи з наборами даних у вигляді мапи.*/
+@use "sass:map";
+@use "./variables" as v;
+
+/*формуємо мапу з набором точок перелому з макета, з можливістю визначити власний набір (інструкція !default).*/
+$breakpoints: (
+  "sm": v.$sm,
+  "md": v.$md,
+  "lg": v.$lg,
+  "xl": v.$xl,
+  "xxl": v.$xxl,
+) !default;
+
+/*міксин із назвою mq, в якому визначаємо набір параметрів для управління:
+— значеннями брейкпоінтів ($bp);
+— типами медіафункції ($type);
+— активацією медіафункції для перевірки щільності пікселів пристрою.*/
+@mixin mq($bp: sm, $type: min, $is-retina: false) {
+  @if map.has-key($breakpoints, $bp) {
+    $width: map-get($breakpoints, $bp);
+
+    @if $type == max {
+      $width: $width - 0.02px;
+    }
+
+    @media only screen and (#{$type}-width: $width) {
+      @if $is-retina {
+        @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+          @content;
+        }
+      } @else {
+        @content;
+      }
+    }
+  }
+}
+
 // Міксин для керування властивостями флекс контейнера 
 // Використовується у файлі _flex.scss
 @mixin flex-center($is-column: false) {
@@ -43,3 +80,4 @@
         @error "Incompatible units. Check mixin params";
     }
   }
+
