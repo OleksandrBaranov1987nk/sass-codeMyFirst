@@ -1,9 +1,7 @@
-/*імпортуємо модуль map для роботи з наборами даних у вигляді мапи.*/
 @use "sass:map";
 @use "./variables" as v;
 
-/*формуємо мапу з набором точок перелому з макета, з можливістю визначити власний набір (інструкція !default).*/
-$breakpoints: (
+$breakpoints: ( /*формуємо мапу з набором точок перелому з макета, з можливістю визначити власний набір (інструкція !default).*/
   "sm": v.$sm,
   "md": v.$md,
   "lg": v.$lg,
@@ -11,10 +9,11 @@ $breakpoints: (
   "xxl": v.$xxl,
 ) !default;
 
-/*міксин із назвою mq, в якому визначаємо набір параметрів для управління:
+/*створюємо міксин із назвою mq, в якому визначаємо набір параметрів для управління:
 — значеннями брейкпоінтів ($bp);
 — типами медіафункції ($type);
 — активацією медіафункції для перевірки щільності пікселів пристрою.*/
+
 @mixin mq($bp: sm, $type: min, $is-retina: false) {
   @if map.has-key($breakpoints, $bp) {
     $width: map-get($breakpoints, $bp);
@@ -35,49 +34,50 @@ $breakpoints: (
   }
 }
 
-// Міксин для керування властивостями флекс контейнера 
+
+// Міскин для керуванням властивостями флекс контейнера
 // Використовується у файлі _flex.scss
 @mixin flex-center($is-column: false) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    @if $is-column {
-      flex-direction: column;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @if $is-column {
+    flex-direction: column;
   }
-  
-  // Міксин для стилізації плейсхолдера інпута
-  @mixin placeholder {
-    &::placeholder {
-      @content;
-    }
+}
+
+// Міксин для стилізації плейсхолдера інпута
+@mixin placeholder {
+  &::placeholder {
+    @content;
   }
-  
-  // Міксин для респонсивного розміру шрифтів
-  @mixin fluid-fs($min-w, $max-w, $min-fs, $max-fs) {
-    $u1: unit($min-w);
-    $u2: unit($max-w);
-    $u3: unit($min-fs);
-    $u4: unit($max-fs);
-  
-    @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
-      & {
-        font-size: $min-fs;
-  
-        @media only screen and (min-width: $min-w) {
-          font-size: calc(
-            #{$min-fs} + #{strip-unit($max-fs - $min-fs)} *
-              ((100vw - #{$min-w}) / #{strip-unit($max-w - $min-w)})
-          );
-        }
-  
-        @media only screen and (min-width: $max-w) {
-          font-size: $max-fs;
-        }
+}
+
+// Міксин для респонсивного розмішу шрифтів
+@mixin fluid-fs($min-w, $max-w, $min-fs, $max-fs) {
+  $u1: unit($min-w);
+  $u2: unit($max-w);
+  $u3: unit($min-fs);
+  $u4: unit($max-fs);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      font-size: $min-fs;
+
+      @media only screen and (min-width: $min-w) {
+        font-size: calc(
+          #{$min-fs} + #{strip-unit($max-fs - $min-fs)} *
+            ((100vw - #{$min-w}) / #{strip-unit($max-w - $min-w)})
+        );
       }
-    } @else {
-        @error "Incompatible units. Check mixin params";
+
+      @media only screen and (min-width: $max-w) {
+        font-size: $max-fs;
+      }
     }
+  } @else {
+    @error "Incompatible units. Check mixin params";
   }
+}
 

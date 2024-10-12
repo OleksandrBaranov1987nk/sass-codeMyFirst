@@ -1,22 +1,21 @@
-@use "variables" as v;
-
+@use "variables" as *;
 // Збираємо в мапи
 // Набори відступів
 $spacers: (
   "0": 0,
-  xxs: v.$spacer-xxs,
-  xs: v.$spacer-xs,
-  s: v.$spacer-s,
-  m: v.$spacer-m,
-  l: v.$spacer-l,
-  xl: v.$spacer-xl,
-  xxl: v.$spacer-xxl
+  xxs: $spacer-xxs,
+  xs: $spacer-xs,
+  s: $spacer-s,
+  m: $spacer-m,
+  l: $spacer-l,
+  xl: $spacer-xl,
+  xxl: $spacer-xxl,
 );
 
 // Види відступів
 $types: (
   "m": "margin",
-  "p": "padding"
+  "p": "padding",
 );
 
 // Сторони для відступів
@@ -25,7 +24,7 @@ $sides: (
   t: "-top",
   r: "-right",
   b: "-bottom",
-  l: "-left"
+  l: "-left",
 );
 
 // Перебираємо значення для відступів

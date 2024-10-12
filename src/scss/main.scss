@@ -1,5 +1,5 @@
-// @use "utils";
-@use "utils/index";
+@use "utils";
+@import "./utils/variables";
 
 :root {
   font-family: sans-serif;
