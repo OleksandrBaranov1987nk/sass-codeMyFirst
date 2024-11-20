@@ -29,7 +29,7 @@ $colors: (
     background-color: $color;
   }
 
-  // заливка `svg`
+  // заливка svg
   .fill-#{$name} {
     svg {
       color: $color;
